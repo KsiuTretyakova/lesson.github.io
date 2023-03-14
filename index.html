@@ -4,9 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <!-- Змінюємо заголовок -->
+    <title>Drawing Program</title>
+
 </head>
 <body>
     
+    <!-- Додаємо заголовок до сайту -->
+    <h1>Drawing Program</h1>
+
+    <!-- тег полотна (холст) -->
+    <!-- onclick - аргумент, що викликає функцію після кліку мишею по полотну -->
+    <canvas id="imgCanvas" width="600" height="400" onclick="draw(event)"></canvas>
+
+    <!-- В даній версії JS буде не окремим файлом, а вбудована до сторінки html -->
+    <!-- script можна додавати як в head так і в body, різниця в тому,  -->
+    <!-- коли повен спрацювати код - body - якщо після дизайну -->
+    <script>
+        
+        // функція draw(event) - викликатиметься після кліку по полотну
+        function draw(event) {
+            
+            // Звернення до холсту по id
+            var canvas = document.getElementById("imgCanvas");
+            
+            // canvas.getContext(contextType, contextAttributes);
+            // повертає контекст малювання на полотні або null, якщо контекст не визначено
+            // "2d" - створення двовимірного контексту
+            var ctx = canvas.getContext("2d");
+
+            // повертає об'єкт DOMRect, 
+            // який зберігає розміри елементу та його розміщення відносно видимої частини перегляду
+            // властивості left та top повертають координати X та Y верхнього лівого кута елемента
+            // властивості right та bottom повертають координати X та Y нижнього правого кута елемента
+            var rect = canvas.getBoundingClientRect();
+            
+            // визначаємо координати майбутніх малюнків кола відносно полотна
+            // координати центра дуги
+            var posx = event.clientX - rect.left;
+            var posy = event.clientY - rect.top;
+            
+            // обираємо колір кружечків
+            ctx.fillStyle = "#aaaaff";
+            
+            // метод beginPath() починає контур або скидає поточний контур
+            ctx.beginPath();
+            
+            // arc метод — один з найбазовіших методів canvas api,
+            // використовується для малювання кіл, а також кривих ліній
+
+            // ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+            // x, y - горизонтальна та вертикальна координати центра дуги
+            // radius - радіус дуги
+            // startAngle, endAngle - кути початку та кінця дуги в радіанах
+            // (вимірюються за годинниковою стрілкою від додатньої осі X)
+            // anticlockwise - необов'язковий Boolean, задає напрям малювання дуги
+            // якщо true - проти годинникової стрілки, false - за годинниковою стрілкою
+            ctx.arc(posx, posy, 50, 0, Math.PI * 2);
+            
+            // заливка заданого або поточного шляху
+            ctx.fill();
+        }
+    </script>
+
 </body>
 </html>
